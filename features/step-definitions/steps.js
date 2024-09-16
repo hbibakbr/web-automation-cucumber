@@ -1,23 +1,20 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
 const { expect, $ } = require('@wdio/globals')
 
-const LoginPage = require('../pageobjects/login.page');
-const SecurePage = require('../pageobjects/secure.page');
-
-const pages = {
-    login: LoginPage
-}
+const LoginPage = require('../pageobjects/login.page.js');
+const InventoryPage = require('../pageobjects/inventory.page.js');
+const Page = require('../pageobjects/page.js')
 
 Given(/^I am on the (\w+) page$/, async (page) => {
-    await pages[page].open()
+    await Page.open('/')
 });
 
 When(/^I login with (\w+) and (.+)$/, async (username, password) => {
     await LoginPage.login(username, password)
 });
 
-Then(/^I should see a flash message saying (.*)$/, async (message) => {
-    await expect(SecurePage.flashAlert).toBeExisting();
-    await expect(SecurePage.flashAlert).toHaveText(expect.stringContaining(message));
+Then(/^I should see inventory page and title (.*)$/, async (title) => {
+    await expect(InventoryPage.inventoryPageTitle).toBeExisting();
+    await expect(InventoryPage.inventoryPageTitle).toHaveText(expect.stringContaining(title));
 });
 

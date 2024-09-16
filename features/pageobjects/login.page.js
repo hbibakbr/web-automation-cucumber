@@ -1,23 +1,23 @@
 const { $ } = require('@wdio/globals')
-const Page = require('./page');
+// const Page = require('./page');
 
 /**
  * sub page containing specific selectors and methods for a specific page
  */
-class LoginPage extends Page {
+class LoginPage {
     /**
      * define selectors using getter methods
      */
     get inputUsername () {
-        return $('#username');
+        return $('//input[@id="user-name"]');
     }
 
     get inputPassword () {
-        return $('#password');
+        return $('//input[@id="password"]');
     }
 
     get btnSubmit () {
-        return $('button[type="submit"]');
+        return $('//input[@id="login-button"]');
     }
 
     /**

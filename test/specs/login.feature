@@ -1,12 +1,11 @@
-Feature: The Internet Guinea Pig Website
+Feature: Functional login of Saucedemo
 
   Scenario Outline: As a user, I can log into the secure area
 
     Given I am on the login page
     When I login with <username> and <password>
-    Then I should see a flash message saying <message>
+    Then I should see inventory page and title <title>
 
     Examples:
-      | username | password             | message                        |
-      | tomsmith | SuperSecretPassword! | You logged into a secure area! |
-      | foobar   | barfoo               | Your username is invalid!      |
+      | username       | password             | title          |
+      | standard_user  | secret_sauce         | Products       |
