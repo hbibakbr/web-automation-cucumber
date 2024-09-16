@@ -1,0 +1,19 @@
+{
+  "name": "web-automation-cucumber",
+  "version": "1.0.0",
+  "description": "web automation webdriver.io using cucumber",
+  "main": "index.js",
+  "scripts": {
+    "test": "wdio run ./wdio.conf.js",
+    "wdio": "wdio run ./wdio.conf.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wdio/cli": "^9.0.9",
+    "@wdio/cucumber-framework": "^9.0.8",
+    "@wdio/local-runner": "^9.0.9",
+    "@wdio/spec-reporter": "^9.0.8",
+    "wdio-wait-for": "^3.0.11"
+  }
+}
