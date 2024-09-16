@@ -9,7 +9,7 @@ Given(/^I am on the (\w+) page$/, async (page) => {
     await Page.open('/')
 });
 
-When(/^I login with valid credentials $/, async () => {
+When(/^I login with valid credentials$/, async () => {
     await LoginPage.login('standard_user', 'secret_sauce')
 });
 

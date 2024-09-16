@@ -42,9 +42,9 @@ class LoginPage {
     /**
      * overwrite specific options to adapt it to page object
      */
-    open () {
+/*     open () {
         return super.open('login');
-    }
+    } */
 }
 
 module.exports = new LoginPage();
