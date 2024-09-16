@@ -1,5 +1,5 @@
 @regression
-Feature: Functional Login Test Saucedemo
+Feature: Login Functional Tests Saucedemo
 
   @positive
   Scenario: As a user, I can log into the saucedemo products area
