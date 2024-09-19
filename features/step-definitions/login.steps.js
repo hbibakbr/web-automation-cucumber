@@ -7,6 +7,7 @@ const Page = require('../pageobjects/page.js')
 
 Given(/^I am on the (\w+) page$/, async (page) => {
     await Page.open('/')
+    await browser.maximizeWindow()
 });
 
 When(/^I login with valid credentials$/, async () => {
