@@ -5,6 +5,7 @@ const { Before, After } = require('@wdio/cucumber-framework');
 const LoginPage = require('../pageobjects/login.page.js');
 const InventoryPage = require('../pageobjects/inventory.page.js');
 const Page = require('../pageobjects/page.js')
+const DetailPage = require('../pageobjects/detail.page.js')
 
 // Before Hooks
 
@@ -41,5 +42,21 @@ When(/^I remove product from the cart$/, async () => {
 
 Then(/^The cart badges is no longer displayed$/, async () => {
     await InventoryPage.assertRemoveBadges();
+    await browser.pause(2000);
+})
+
+// Scenario Step: Add a product to the cart on detail page
+Given(/^I am access detail product page$/, async () => {
+    await InventoryPage.productTest.click();
+})
+
+When(/^I add a product to the cart on detail product page$/, async () => {
+    await DetailPage.btnAddToCart.click();
+})
+
+// Scenario Step: Remove a product from the cart on the detail page
+
+When(/^I remove product from the cart on detail product page$/, async () => {
+    await DetailPage.btnRemoveProduct.click();
     await browser.pause(2000);
 })
