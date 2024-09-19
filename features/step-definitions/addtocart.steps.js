@@ -26,7 +26,7 @@ When(/^I add a product to the cart$/, async () => {
 Then(/^The cart icon should display badge with 1 item$/, async () => {
     await InventoryPage.assertBadges()
     await expect(InventoryPage.cartBadges).toHaveText('1');
-    await browser.pause(5000);
+    await browser.pause(2000);
 })
 
 // Scenario Step: Remove a product from the cart
@@ -41,5 +41,5 @@ When(/^I remove product from the cart$/, async () => {
 
 Then(/^The cart badges is no longer displayed$/, async () => {
     await InventoryPage.assertRemoveBadges();
-    await browser.pause(5000);
+    await browser.pause(2000);
 })
