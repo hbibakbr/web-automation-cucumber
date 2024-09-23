@@ -16,7 +16,7 @@ The project scenarios include:
 - **Add to Cart**: Automate scenario of add product to the shopping cart.
 - **Checkout**: Scenario of Completing the checkout process, which includes entering user information, validating the order summary, and finish an order.
 
-## Screenshot of Order Suite Report
+## Screenshot of Checkout Feature
 
 ![Order Suite Report](cucumber-code.jpg)
 
