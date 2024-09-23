@@ -66,7 +66,7 @@ When(/^I am providing firstname: (\w+), lastname: (\w+), and postal code: (.+)$/
     await browser.pause(2000);
 })
 
-When(/^I click checkout button$/, async () => {
+When(/^I click continue button$/, async () => {
     await CheckoutPage.btnContinue.click();
     await browser.pause(2000);
 })
@@ -92,4 +92,15 @@ When(/^I click finish button$/, async () => {
 Then(/^I successful order sauce labs backpack$/, async () => {
     await CompletePage.assertSuccessOrder();
     await browser.pause(2000);
+})
+
+// Cannot continue checkout an product (Negative)
+
+Given(/^I am providing empty firstname: (.*), lastname: (.*), and postal code: (.*)$/, async (firstname, lastname, postal) => {
+    await CheckoutPage.inputForm(firstname, lastname, postal);
+    await browser.pause(2000);
+})
+
+Then(/^I should see error message: (.+)$/, async (message) => {
+    await CheckoutPage.assertFailedCheckout(message);
 })

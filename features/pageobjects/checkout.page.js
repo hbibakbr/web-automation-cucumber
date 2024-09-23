@@ -26,6 +26,9 @@ class CheckoutPage {
         return $('//button[contains(@id,"cancel") and text() = "Cancel"]')
     }
 
+    get msgErrorCheckout () {
+        return $('//h3[@data-test="error"]')
+    }
     get msgFirstnameError () {
         return $('//h3[contains(@data-test, "error") and text() = "Error: First Name is required"]')
     }
@@ -42,6 +45,11 @@ class CheckoutPage {
         await this.inputFirstname.setValue(firstname)
         await this.inputLastname.setValue(lastname)
         await this.inputPostalCode.setValue(postal)
+    }
+
+    async assertFailedCheckout (message) {
+        await expect(this.msgErrorCheckout).toBeExisting();
+        await expect(this.msgErrorCheckout).toHaveText(expect.stringContaining(message));
     }
 }
 
