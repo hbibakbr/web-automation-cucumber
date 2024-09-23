@@ -57,3 +57,15 @@ Feature: Checkout Functional Test Saucedemo
             | firstname | lastname | postal | message                                 | 
             | Tester    | Akbar    | 1123   | Error: Last Name is required            | 
 
+
+    @negative
+    Scenario Outline: As a user, I can't continue checkout an product because empty postal code
+        Given I am on the checkout page
+        Given I am providing firstname: <firstname> , lastname: <lastname>, and empty postal code:
+        When I click continue button
+        Then I should see error message: <message>
+
+        Examples:
+            | firstname | lastname | postal | message                                 | 
+            | Tester    | Akbar    | 1123   | Error: Postal Code is required          | 
+

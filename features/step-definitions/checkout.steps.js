@@ -105,6 +105,10 @@ Given(/^I am providing firstname: (.*) , empty lastname: (.*), and postal code: 
     await CheckoutPage.inputForm(firstname, lastname, postal);
     await browser.pause(2000);
 })
+Given(/^I am providing firstname: (.*) , lastname: (.*), and empty postal code:(.*)$/, async (firstname, lastname, postal) => {
+    await CheckoutPage.inputForm(firstname, lastname, postal);
+    await browser.pause(2000);
+})
 
 Then(/^I should see error message: (.+)$/, async (message) => {
     await CheckoutPage.assertFailedCheckout(message);
