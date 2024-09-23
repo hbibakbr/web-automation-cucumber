@@ -12,6 +12,29 @@ class Page {
     open (path) {
         return browser.url(path)
     }
+
+    get btnCart () {
+        return $('//a[@data-test="shopping-cart-link"]')
+    }
+
+    get btnCheckout () {
+        return $('//button[@id="checkout"]')
+    }
+
+    get btnContinue () {
+        return $('//input[@id="continue"]')
+    }
+
+    async checkoutPage () {
+        await this.btnCart.click();
+        await this.btnCheckout.click();
+    }
+
+    async overviewPage () {
+        await this.btnCart.click();
+        await this.btnCheckout.click();
+        await this.btnContinue.click()
+    }
 }
 
 module.exports =  new Page()

@@ -1,4 +1,7 @@
 Feature: Checkout Functional Test Saucedemo
+    As a user,
+    I have a sauce labs backpack on the cart
+    and I want to checkout sauce labs backpack.
 
     Scenario: As a user, I can checkout an item from the cart page
         Given I am on cart page
@@ -6,11 +9,13 @@ Feature: Checkout Functional Test Saucedemo
         When I click checkout an product
         Then I should be on the checkout page
 
-    Scenario: As a user, I can continue an checkout product
+    Scenario: As a user, I can continue place an order checkout product
         Given I am on the checkout page
-        When I am providing firstname lastname and postal code
+        When I am providing firstname: <firstname>, lastname: <lastname>, and postal code: <postal>
         When I click checkout button
-        Then I should be on the confirmation page
-        Then I click finish button
-        Then I am succesfully checkout an product
-        Then I should see a successful message
+        Then I should be on the overview page
+
+        Examples:
+        | firstname | lastname | postal |
+        | Tester    | Akbar    | 1123   |
+

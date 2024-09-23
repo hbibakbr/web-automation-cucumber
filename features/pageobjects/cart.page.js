@@ -17,6 +17,10 @@ class CartPage {
         return $('//button[@id="checkout"]')
     }
 
+    get btnRemove () {
+        return $('//button[@id="remove-sauce-labs-backpack"]')
+    }
+
     async assertProductTest () {
         await expect(this.productTest).toHaveText('Sauce Labs Backpack');
     }
