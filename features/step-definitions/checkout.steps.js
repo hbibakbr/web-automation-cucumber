@@ -8,6 +8,8 @@ const Page = require('../pageobjects/page.js')
 const CartPage = require('../pageobjects/cart.page.js')
 const CheckoutPage = require('../pageobjects/checkout.page.js');
 const OverviewPage = require('../pageobjects/overview.page.js')
+const SideBarPage = require('../pageobjects/sidebar.page.js')
+const CompletePage = require('../pageobjects/complete.page.js')
 
 // Before Hooks
 
@@ -15,12 +17,22 @@ Before(async () => {
     await Page.open('/'); // Open login page
     await browser.maximizeWindow();
     await LoginPage.login('standard_user', 'secret_sauce'); // Login to account
+    await InventoryPage.btnAddToCart.click(); // Add to cart
 });
 
+After(async () => {
+    // Reset state cart atau halaman lainnya setelah skenario selesai
+    console.log('Running After Hook');
+    await SideBarPage.menuSidebar.click();
+    await SideBarPage.resetAppState.click();
+    await SideBarPage.logout.click();
+    console.log('After Hook Complete');
+});
+
+
 // Checkout product
-Given(/^I am on cart page$/, async () => {    
-    await InventoryPage.btnAddToCart.click(); // Add to cart
-    await InventoryPage.btnCart.click(); // Access cart page
+Given(/^I am on cart page$/, async () => {  
+    await InventoryPage.btnCart.click();
     await expect(CartPage.cartPageTitle).toBeExisting();
 })
 
@@ -64,4 +76,20 @@ Then(/^I should be on the overview page$/, async () => {
     await browser.pause(2000);
 })
 
-// Finish Checkoout
+// Finish Checkout
+
+Given(/^I am on the overview page$/, async () => {
+    await CheckoutPage.btnContinue.click();
+    await expect(OverviewPage.overviewPageTitle).toBeExisting();
+    await browser.pause(2000);
+})
+
+When(/^I click finish button$/, async () => {
+    await OverviewPage.btnFinish.click();
+    await browser.pause(2000);
+})
+
+Then(/^I successful order sauce labs backpack$/, async () => {
+    await CompletePage.assertSuccessOrder();
+    await browser.pause(2000);
+})
