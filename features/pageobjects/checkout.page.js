@@ -26,6 +26,10 @@ class CheckoutPage {
         return $('//button[contains(@id,"cancel") and text() = "Cancel"]')
     }
 
+    get btnErrorMessage () {
+        return $('//button[@data-test="error-button"]')
+    }
+
     get msgErrorCheckout () {
         return $('//h3[@data-test="error"]')
     }
@@ -45,6 +49,12 @@ class CheckoutPage {
         await this.inputFirstname.setValue(firstname)
         await this.inputLastname.setValue(lastname)
         await this.inputPostalCode.setValue(postal)
+    }
+
+    async clearInputForm () {
+        await this.inputFirstname.clearValue()
+        await this.inputLastname.clearValue()
+        await this.inputPostalCode.clearValue()
     }
 
     async assertFailedCheckout (message) {

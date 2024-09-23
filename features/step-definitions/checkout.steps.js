@@ -1,6 +1,6 @@
-const { Given, When, Then } = require('@wdio/cucumber-framework');
+const { Given, When, Then} = require('@wdio/cucumber-framework');
 const { expect, $ } = require('@wdio/globals');
-const { Before, After } = require('@wdio/cucumber-framework');
+const { BeforeAll, AfterAll } = require('@wdio/cucumber-framework');
 
 const LoginPage = require('../pageobjects/login.page.js');
 const InventoryPage = require('../pageobjects/inventory.page.js');
@@ -13,25 +13,25 @@ const CompletePage = require('../pageobjects/complete.page.js')
 
 // Before Hooks
 
-Before(async () => {
+BeforeAll(async () => {
     await Page.open('/'); // Open login page
     await browser.maximizeWindow();
     await LoginPage.login('standard_user', 'secret_sauce'); // Login to account
-    await InventoryPage.btnAddToCart.click(); // Add to cart
+    await expect(InventoryPage.inventoryPageTitle).toBeExisting();
 });
 
-After(async () => {
-    // Reset state cart atau halaman lainnya setelah skenario selesai
-    console.log('Running After Hook');
+AfterAll(async () => {
+    // Logout atau reset jika perlu
     await SideBarPage.menuSidebar.click();
-    await SideBarPage.resetAppState.click();
+    await browser.pause(2000);
+    
     await SideBarPage.logout.click();
-    console.log('After Hook Complete');
+    await browser.pause(2000);
 });
-
 
 // Checkout product
 Given(/^I am on cart page$/, async () => {  
+    await InventoryPage.btnAddToCart.click(); // Add to cart
     await InventoryPage.btnCart.click();
     await expect(CartPage.cartPageTitle).toBeExisting();
 })
@@ -53,7 +53,7 @@ Then(/^I should be on the checkout page$/, async () => {
 // Place an order 
 
 Given(/^I am on the checkout page$/, async () => {
-    await Page.checkoutPage();
+    // await Page.checkoutPage();
     await expect(CheckoutPage.checkoutPageTitle).toBeExisting();
     await browser.pause(2000);
 })
@@ -79,7 +79,7 @@ Then(/^I should be on the overview page$/, async () => {
 // Finish Checkout
 
 Given(/^I am on the overview page$/, async () => {
-    await CheckoutPage.btnContinue.click();
+    // await CheckoutPage.btnContinue.click();
     await expect(OverviewPage.overviewPageTitle).toBeExisting();
     await browser.pause(2000);
 })
@@ -91,25 +91,56 @@ When(/^I click finish button$/, async () => {
 
 Then(/^I successful order sauce labs backpack$/, async () => {
     await CompletePage.assertSuccessOrder();
+    await CompletePage.btnBackHome.click();
     await browser.pause(2000);
 })
 
-// Cannot continue checkout an product (Negative)
+// (Negative) Cannot continue checkout an product
 
-Given(/^I am providing empty firstname: (.*), lastname: (.*), and postal code: (.*)$/, async (firstname, lastname, postal) => {
+Given(/^I am on inventory page$/, async () => {
+    await InventoryPage.assertInventoryUrl()
+    await browser.pause(2000);
+})
+
+Given(/^I add a product to the cart$/, async () => {
+    await InventoryPage.btnAddToCart.click()
+    await browser.pause(2000);
+})
+
+Given(/^I access the cart page$/, async () => {
+    await InventoryPage.btnCart.click()
+    await browser.pause(2000);
+})
+
+When(/^I am providing empty firstname: (.*), lastname: (.*), and postal code: (.*)$/, async (firstname, lastname, postal) => {
     await CheckoutPage.inputForm(firstname, lastname, postal);
     await browser.pause(2000);
 })
 
-Given(/^I am providing firstname: (.*) , empty lastname: (.*), and postal code: (.*)$/, async (firstname, lastname, postal) => {
+// Clear data
+// (Negative) Cannot continue checkout an product
+
+Given(/^I am clear input data value$/, async () => {
+    await CheckoutPage.btnErrorMessage.click()
+    await browser.pause(2000);
+
+    await CheckoutPage.clearInputForm();
+    await browser.pause(2000);
+
+    await CheckoutPage.btnCancel.click()
+    await CartPage.btnCheckout.click()
+})
+
+When(/^I am providing firstname: (.*) , empty lastname: (.*), and postal code: (.*)$/, async (firstname, lastname, postal) => {
     await CheckoutPage.inputForm(firstname, lastname, postal);
     await browser.pause(2000);
 })
-Given(/^I am providing firstname: (.*) , lastname: (.*), and empty postal code:(.*)$/, async (firstname, lastname, postal) => {
+When(/^I am providing firstname: (.*) , lastname: (.*), and empty postal code:(.*)$/, async (firstname, lastname, postal) => {
     await CheckoutPage.inputForm(firstname, lastname, postal);
     await browser.pause(2000);
 })
 
 Then(/^I should see error message: (.+)$/, async (message) => {
     await CheckoutPage.assertFailedCheckout(message);
+    await browser.pause(2000);
 })

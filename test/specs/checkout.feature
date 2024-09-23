@@ -24,8 +24,6 @@ Feature: Checkout Functional Test Saucedemo
     
     @positive
     Scenario: As a user, I can finish order an product
-        Given I am on the checkout page
-        Given I am providing firstname: <firstname>, lastname: <lastname>, and postal code: <postal>
         Given I am on the overview page
         When I click finish button
         Then I successful order sauce labs backpack
@@ -36,20 +34,23 @@ Feature: Checkout Functional Test Saucedemo
     
     @negative
     Scenario Outline: As a user, I can't continue checkout an product because empty first name
-        Given I am on the checkout page
-        Given I am providing empty firstname: , lastname: <lastname>, and postal code: <postal>
+        Given I am on inventory page
+        Given I add a product to the cart
+        Given I access the cart page
+        When I click checkout an product
+        When I am providing empty firstname: , lastname: <lastname>, and postal code: <postal>
         When I click continue button
         Then I should see error message: <message>
     
         Examples:
-        | firstname | lastname | postal | message                                 | 
-        | Tester    | Akbar    | 1123   | Error: First Name is required           |
+            | firstname | lastname | postal | message                                 | 
+            | Tester    | Akbar    | 1123   | Error: First Name is required           |
 
 
     @negative
     Scenario Outline: As a user, I can't continue checkout an product because empty last name
-        Given I am on the checkout page
-        Given I am providing firstname: <firstname> , empty lastname: , and postal code: <postal>
+        Given I am clear input data value
+        When I am providing firstname: <firstname> , empty lastname: , and postal code: <postal>
         When I click continue button
         Then I should see error message: <message>
 
@@ -60,8 +61,9 @@ Feature: Checkout Functional Test Saucedemo
 
     @negative
     Scenario Outline: As a user, I can't continue checkout an product because empty postal code
-        Given I am on the checkout page
-        Given I am providing firstname: <firstname> , lastname: <lastname>, and empty postal code:
+
+        Given I am clear input data value
+        When I am providing firstname: <firstname> , lastname: <lastname>, and empty postal code:
         When I click continue button
         Then I should see error message: <message>
 
