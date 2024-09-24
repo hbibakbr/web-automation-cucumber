@@ -79,7 +79,7 @@ Then(/^I should be on the overview page$/, async () => {
 // Finish Checkout
 
 Given(/^I am on the overview page$/, async () => {
-    // await CheckoutPage.btnContinue.click();
+    await OverviewPage.assertOverviewPageUrl();
     await expect(OverviewPage.overviewPageTitle).toBeExisting();
     await browser.pause(2000);
 })

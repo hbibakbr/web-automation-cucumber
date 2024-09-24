@@ -2,6 +2,10 @@ const { $ } = require('@wdio/globals')
 
 class overviewPage {
 
+    get overviewPagePageUrl() {
+        return 'https://www.saucedemo.com/checkout-step-two.html'
+   }
+
     get overviewPageTitle () {
         return $('//span[contains(@data-test,"title") and text() = "Checkout: Overview"]')
     }
@@ -16,6 +20,10 @@ class overviewPage {
 
     get btnFinish () {
         return $('//button[@id="finish"]')
+    }
+
+    async assertOverviewPageUrl() {
+        await expect(browser).toHaveUrl(this.overviewPagePageUrl)
     }
 
 }
