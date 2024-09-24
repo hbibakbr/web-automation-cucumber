@@ -85,6 +85,7 @@ Given(/^I am on the overview page$/, async () => {
 })
 
 When(/^I click finish button$/, async () => {
+    await OverviewPage.btnFinish.waitForDisplayed();
     await OverviewPage.btnFinish.click();
     await browser.pause(2000);
 })
