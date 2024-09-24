@@ -27,10 +27,6 @@ Feature: Checkout Functional Test Saucedemo
         Given I am on the overview page
         When I click finish button
         Then I successful order sauce labs backpack
-
-        Examples:
-        | firstname | lastname | postal |
-        | Tester    | Akbar    | 1123   |
     
     @negative
     Scenario Outline: As a user, I can't continue checkout an product because empty first name
