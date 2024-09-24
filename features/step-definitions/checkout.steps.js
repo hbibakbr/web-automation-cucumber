@@ -18,10 +18,10 @@ BeforeAll(async () => {
     await browser.maximizeWindow();
     await LoginPage.login('standard_user', 'secret_sauce'); // Login to account
     await expect(InventoryPage.inventoryPageTitle).toBeExisting();
+    await InventoryPage.assertInventoryUrl();
 });
 
 AfterAll(async () => {
-    // Logout atau reset jika perlu
     await SideBarPage.menuSidebar.click();
     await browser.pause(2000);
     
@@ -42,6 +42,7 @@ Given(/^I already have an item to checkout from the cart$/, async () => {
 
 
 When(/^I click checkout an product$/, async () => {
+    await CartPage.btnCheckout.waitForDisplayed();
     await CartPage.btnCheckout.click();
 })
 
